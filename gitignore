@@ -1,0 +1,59 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+.venv/
+venv/
+env/
+*.egg-info/
+dist/
+build/
+.pytest_cache/
+
+# Database & user data (never commit personal files)
+*.db
+*.db-wal
+*.db-shm
+data/
+logs/
+cache/
+thumbnails/
+
+# Node / Frontend
+node_modules/
+frontend/dist/
+frontend/.vite/
+.npm/
+
+# Rust
+rust_ext/target/
+rust_ext/Cargo.lock
+
+# PyInstaller
+backend/dist/
+backend/build/
+backend/static/
+*.spec.bak
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+*.lnk
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Env / secrets
+.env
+.env.local
+*.pem
+*.key
+
+# Puppeteer cache (if present)
+.cache/
