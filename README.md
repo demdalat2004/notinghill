@@ -1,4 +1,5 @@
 # NotingHill
+
 **Local File Intelligence System** — Index, search, and organize your files with full-text search, timeline, and duplicate detection.
 
 ```
@@ -12,26 +13,26 @@
 
 ## Features
 
-| Feature | Description |
-|---|---|
-| **Full-text search** | SQLite FTS5 — search file names, content, metadata |
-| **File indexing** | txt, md, pdf, docx, xlsx, images (EXIF), mp3/audio |
-| **Timeline** | Browse files by year / month / day |
+| Feature                 | Description                                                      |
+| ----------------------- | ---------------------------------------------------------------- |
+| **Full-text search**    | SQLite FTS5 — search file names, content, metadata               |
+| **File indexing**       | txt, md, pdf, docx, xlsx, images (EXIF), mp3/audio               |
+| **Timeline**            | Browse files by year / month / day                               |
 | **Duplicate detection** | Exact (sha256) + similar text (simhash) + similar images (phash) |
-| **Live progress** | Real-time job monitoring per folder |
-| **Futurist UI** | Dark/light theme, EN/VI bilingual |
-| **Local first** | All data stays on your machine (SQLite, port 7878) |
-| **Portable** | PyInstaller exe — no Python install needed |
+| **Live progress**       | Real-time job monitoring per folder                              |
+| **Futurist UI**         | Dark/light theme, EN/VI bilingual                                |
+| **Local first**         | All data stays on your machine (SQLite, port 7878)               |
+| **Portable**            | PyInstaller exe — no Python install needed                       |
 
 ---
 
 ## Requirements
 
-| Tool | Min version |
-|---|---|
-| Python | 3.11+ |
-| Node.js | 18+ |
-| npm | 9+ |
+| Tool       | Min version                       |
+| ---------- | --------------------------------- |
+| Python     | 3.11+                             |
+| Node.js    | 18+                               |
+| npm        | 9+                                |
 | PowerShell | 5+ (Windows) / pwsh (macOS/Linux) |
 
 ---
@@ -40,11 +41,48 @@
 
 ### Development (hot reload)
 
+#### Windows
+
 ```powershell
 .\run_dev.ps1
 ```
 
+#### macOS/Linux
+
+install build tool for python:
+
+```bash
+ sudo apt-get update; sudo apt-get install -y \
+ build-essential \
+ libssl-dev \
+ zlib1g-dev \
+ libbz2-dev \
+ libreadline-dev \
+ libsqlite3-dev \
+ wget \
+ curl \
+ llvm \
+ libncursesw5-dev \
+ xz-utils \
+ tk-dev \
+ libxml2-dev \
+ libxmlsec1-dev \
+ libffi-dev \
+ liblzma-dev
+```
+
+install python via penv:
+
+```bash
+   pyenv install 3.13.12 --force
+```
+
+```bash
+./run_dev.sh
+```
+
 This will:
+
 1. Create `.venv` if it doesn't exist
 2. `pip install` all Python dependencies
 3. `npm install` frontend packages
@@ -62,6 +100,7 @@ Open `http://127.0.0.1:5173` in your browser.
 ```
 
 This will:
+
 1. Build the React frontend → `backend/static/`
 2. Start FastAPI serving both API and static files on port 7878
 
@@ -76,6 +115,7 @@ Open `http://127.0.0.1:7878`.
 ```
 
 This will:
+
 1. Install all dependencies into `.venv`
 2. Build the React frontend
 3. Run PyInstaller
@@ -169,30 +209,31 @@ notinghill/
 
 ## API Endpoints
 
-| Method | Path | Description |
-|---|---|---|
-| GET | `/api/dashboard` | Stats, active jobs, recent files |
-| GET | `/api/search?q=...` | Full-text search with filters |
-| GET | `/api/search/item/{id}` | File detail + preview |
-| POST | `/api/search/open/{id}` | Open file in OS |
-| GET | `/api/timeline/buckets` | Bucket counts by zoom level |
-| GET | `/api/timeline/items/{bucket}` | Files in bucket |
-| GET | `/api/duplicates/exact` | Exact duplicate groups |
-| GET | `/api/duplicates/similar-text` | Near-duplicate documents |
-| GET | `/api/duplicates/similar-images` | Near-duplicate images |
-| GET | `/api/index/roots` | List indexed folders |
-| POST | `/api/index/roots` | Add + start indexing folder |
-| POST | `/api/index/roots/{id}/reindex` | Reindex a root |
-| GET | `/api/index/jobs` | Job history + active jobs |
-| GET | `/api/settings` | All app settings |
-| POST | `/api/settings` | Update a setting |
-| GET | `/api/docs` | Swagger UI |
+| Method | Path                             | Description                      |
+| ------ | -------------------------------- | -------------------------------- |
+| GET    | `/api/dashboard`                 | Stats, active jobs, recent files |
+| GET    | `/api/search?q=...`              | Full-text search with filters    |
+| GET    | `/api/search/item/{id}`          | File detail + preview            |
+| POST   | `/api/search/open/{id}`          | Open file in OS                  |
+| GET    | `/api/timeline/buckets`          | Bucket counts by zoom level      |
+| GET    | `/api/timeline/items/{bucket}`   | Files in bucket                  |
+| GET    | `/api/duplicates/exact`          | Exact duplicate groups           |
+| GET    | `/api/duplicates/similar-text`   | Near-duplicate documents         |
+| GET    | `/api/duplicates/similar-images` | Near-duplicate images            |
+| GET    | `/api/index/roots`               | List indexed folders             |
+| POST   | `/api/index/roots`               | Add + start indexing folder      |
+| POST   | `/api/index/roots/{id}/reindex`  | Reindex a root                   |
+| GET    | `/api/index/jobs`                | Job history + active jobs        |
+| GET    | `/api/settings`                  | All app settings                 |
+| POST   | `/api/settings`                  | Update a setting                 |
+| GET    | `/api/docs`                      | Swagger UI                       |
 
 ---
 
 ## Database
 
 Data is stored in:
+
 - **Windows:** `%APPDATA%\NotingHill\app.db`
 - **macOS/Linux:** `~/.notinghill/app.db`
 
