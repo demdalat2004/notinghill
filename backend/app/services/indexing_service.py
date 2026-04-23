@@ -90,18 +90,6 @@ def _is_excluded(fpath: Path, excluded_prefixes: list[str]) -> bool:
     return any(normalized.startswith(p) for p in excluded_prefixes)
 
 
-
-    if resume_job_id is not None:
-        job_id = resume_job_id
-        repo_jobs.prepare_resume(job_id)
-    else:
-        job_id = repo_jobs.create_job(root_id, "full_scan" if full_rescan else "incremental")
-
-    job_queue.enqueue(_run_scan, root_id, root_path, job_id, full_rescan)
-    return job_id
-
-
-
 def resume_incomplete_jobs() -> list[int]:
     resumed: list[int] = []
     jobs = repo_jobs.list_resumable_jobs()
@@ -120,6 +108,16 @@ def resume_incomplete_jobs() -> list[int]:
         resumed.append(job["job_id"])
     return resumed
 
+
+def start_index(root_id: int, root_path: str, full_rescan: bool = False, resume_job_id: int | None = None) -> int:
+    if resume_job_id is not None:
+        job_id = resume_job_id
+        repo_jobs.prepare_resume(job_id)
+    else:
+        job_id = repo_jobs.create_job(root_id, "full_scan" if full_rescan else "incremental")
+
+    job_queue.enqueue(_run_scan, root_id, root_path, job_id, full_rescan)
+    return job_id
 
 
 def _run_scan(root_id: int, root_path: str, job_id: int, full_rescan: bool) -> None:
